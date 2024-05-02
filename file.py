@@ -1,61 +1,12 @@
 import requests
-def process_response(response_data):
-    for item in response_data["knowncount"]:
-        response = requests.get(item["rel"])     
-        if response.status_code == 200:
-            data = response.json()
-            print("ID:", item["id"])
-            print("Known Count:", item["knownCount"])
-            print("Update Date:", item["updateDate"])
-            print("Rel:", item["rel"])
-            print("Additional Data:", data)
-            print("------------------------------------")
-        else:
-            print("Failed to retrieve data for", item["id"])
-response_data = {
-    "knowncount": [
-        {
-            "id": "planet",
-            "knownCount": 8,
-            "updateDate": "24/08/2006",
-            "rel": "https://api.le-systeme-solaire.net/rest/knowncount/planet"
-        },
-        {
-            "id": "dwarfPlanet",
-            "knownCount": 5,
-            "updateDate": "24/08/2006",
-            "rel": "https://api.le-systeme-solaire.net/rest/knowncount/dwarfPlanet"
-        },
-        {
-            "id": "asteroid",
-            "knownCount": 1113527,
-            "updateDate": "21/11/2021",
-            "rel": "https://api.le-systeme-solaire.net/rest/knowncount/asteroid"
-        },
-        {
-            "id": "comet",
-            "knownCount": 3743,
-            "updateDate": "08/08/2021",
-            "rel": "https://api.le-systeme-solaire.net/rest/knowncount/comet"
-        },
-        {
-            "id": "moonsPlanet",
-            "knownCount": 285,
-            "updateDate": "01/08/2023",
-            "rel": "https://api.le-systeme-solaire.net/rest/knowncount/moonsPlanet"
-        },
-        {
-            "id": "moonsDwarfPlanet",
-            "knownCount": 9,
-            "updateDate": "02/05/2016",
-            "rel": "https://api.le-systeme-solaire.net/rest/knowncount/moonsDwarfPlanet"
-        },
-        {
-            "id": "moonsAsteroid",
-            "knownCount": 558,
-            "updateDate": "21/11/2021",
-            "rel": "https://api.le-systeme-solaire.net/rest/knowncount/moonsAsteroid"
-        }
-    ]
-}
-process_response(response_data)
+def get_api_response(url):
+    # Envoi d'une requête GET à l'URL spécifiée avec les en-têtes et les données spécifiés
+    response = requests.get(url)
+    # Retourne le contenu de la réponse
+    return response.text
+# URL de l'API
+url = "https://api.le-systeme-solaire.net/rest/knowncount/"
+# Appel de la fonction pour envoyer la requête et récupérer la réponse
+response_text = get_api_response(url)
+# Affichage du contenu de la réponse
+print(response_text)
