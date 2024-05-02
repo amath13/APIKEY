@@ -1,11 +1,17 @@
+import requests
 def process_response(response_data):
-    # Parcourir les éléments de knowncount
     for item in response_data["knowncount"]:
-        print("ID:", item["id"])
-        print("Known Count:", item["knownCount"])
-        print("Update Date:", item["updateDate"])
-        print("Rel:", item["rel"])
-        print("------------------------------------")
+        response = requests.get(item["rel"])     
+        if response.status_code == 200:
+            data = response.json()
+            print("ID:", item["id"])
+            print("Known Count:", item["knownCount"])
+            print("Update Date:", item["updateDate"])
+            print("Rel:", item["rel"])
+            print("Additional Data:", data)
+            print("------------------------------------")
+        else:
+            print("Failed to retrieve data for", item["id"])
 response_data = {
     "knowncount": [
         {
