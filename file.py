@@ -1,3 +1,11 @@
+def process_response(response_data):
+    # Parcourir les éléments de knowncount
+    for item in response_data["knowncount"]:
+        print("ID:", item["id"])
+        print("Known Count:", item["knownCount"])
+        print("Update Date:", item["updateDate"])
+        print("Rel:", item["rel"])
+        print("------------------------------------")
 response_data = {
     "knowncount": [
         {
@@ -44,10 +52,4 @@ response_data = {
         }
     ]
 }
-# Parcourir les éléments de knowncount
-for item in response_data["knowncount"]:
-    print("ID:", item["id"])
-    print("Known Count:", item["knownCount"])
-    print("Update Date:", item["updateDate"])
-    print("Rel:", item["rel"])
-    print("------------------------------------")
+process_response(response_data)
