@@ -1,0 +1,54 @@
+class Ticket:
+    def __init__(self, id, subject, description, status='Open', assignee=None):
+        self.id = id
+        self.subject = subject
+        self.description = description
+        self.status = status
+        self.assignee = assignee
+
+class TicketSystem:
+    def __init__(self):
+        self.tickets = []
+        self.next_ticket_id = 1
+
+    def create_ticket(self, subject, description):
+        ticket = Ticket(self.next_ticket_id, subject, description)
+        self.next_ticket_id += 1
+        self.tickets.append(ticket)
+        return ticket
+
+    def assign_ticket(self, ticket_id, assignee):
+        for ticket in self.tickets:
+            if ticket.id == ticket_id:
+                ticket.assignee = assignee
+                ticket.status = 'Assigned'
+                return ticket
+        return None
+
+    def close_ticket(self, ticket_id):
+        for ticket in self.tickets:
+            if ticket.id == ticket_id:
+                ticket.status = 'Closed'
+                return ticket
+        return None
+
+# Exemple d'utilisation
+ticket_system = TicketSystem()
+
+# Créer un nouveau ticket
+ticket1 = ticket_system.create_ticket("Problème de connexion", "Impossible de se connecter à l'application.")
+
+# Affecter un ticket à un agent
+ticket_system.assign_ticket(ticket1.id, "Agent1")
+
+# Fermer un ticket
+ticket_system.close_ticket(ticket1.id)
+
+# Affichage des tickets
+for ticket in ticket_system.tickets:
+    print("Ticket ID:", ticket.id)
+    print("Subject:", ticket.subject)
+    print("Description:", ticket.description)
+    print("Status:", ticket.status)
+    print("Assignee:", ticket.assignee)
+    print("-------------")
